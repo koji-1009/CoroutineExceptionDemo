@@ -172,7 +172,7 @@ class MainViewModel : ViewModel() {
                             Log.d(TAG, "stop thread 250ms start 2nd")
                             delay(250)
 
-                            throw  Exception("Throw Exception")
+                            throw Exception("Throw Exception")
                             Log.d(TAG, "stop thread 250ms end 2nd")
                         }
                     }
@@ -193,7 +193,7 @@ class MainViewModel : ViewModel() {
                             Log.d(TAG, "stop thread 250ms start 2nd")
                             delay(250)
 
-                            throw  Exception("Throw Exception")
+                            throw Exception("Throw Exception")
                             Log.d(TAG, "stop thread 250ms end 2nd")
                         }
                     }
@@ -215,7 +215,7 @@ class MainViewModel : ViewModel() {
                                 Log.d(TAG, "stop thread 250ms start 2nd")
                                 delay(250)
 
-                                throw  Exception("Throw Exception")
+                                throw Exception("Throw Exception")
                                 Log.d(TAG, "stop thread 250ms end 2nd")
                             }
                         }
@@ -245,7 +245,7 @@ class MainViewModel : ViewModel() {
                                 Log.d(TAG, "stop thread 250ms start 2nd")
                                 delay(250)
 
-                                throw  Exception("Throw Exception")
+                                throw Exception("Throw Exception")
                                 Log.d(TAG, "stop thread 250ms end 2nd")
                             }
                         }
@@ -398,7 +398,7 @@ class MainViewModel : ViewModel() {
                     Log.d(TAG, "stop thread 250ms start 2nd")
                     delay(250)
 
-                    throw  Exception("Throw Exception")
+                    throw Exception("Throw Exception")
                     Log.d(TAG, "stop thread 250ms end 2nd")
                 }
             }
@@ -419,7 +419,7 @@ class MainViewModel : ViewModel() {
                     Log.d(TAG, "stop thread 250ms start 2nd")
                     delay(250)
 
-                    throw  Exception("Throw Exception")
+                    throw Exception("Throw Exception")
                     Log.d(TAG, "stop thread 250ms end 2nd")
                 }
             }
@@ -441,7 +441,7 @@ class MainViewModel : ViewModel() {
                         Log.d(TAG, "stop thread 250ms start 2nd")
                         delay(250)
 
-                        throw  Exception("Throw Exception")
+                        throw Exception("Throw Exception")
                         Log.d(TAG, "stop thread 250ms end 2nd")
                     }
                 }
@@ -471,7 +471,7 @@ class MainViewModel : ViewModel() {
                         Log.d(TAG, "stop thread 250ms start 2nd")
                         delay(250)
 
-                        throw  Exception("Throw Exception")
+                        throw Exception("Throw Exception")
                         Log.d(TAG, "stop thread 250ms end 2nd")
                     }
                 }
