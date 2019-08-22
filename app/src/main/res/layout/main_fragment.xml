@@ -23,34 +23,28 @@
             android:layout_height="wrap_content"
             android:entries="@{viewModel.spinnerTitles}"
             android:selectedItemPosition="@={viewModel.spinnerPosition}"
-            app:layout_constraintBottom_toTopOf="@+id/text_view_title"
+            app:layout_constraintBottom_toTopOf="@+id/scroll_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_view_title"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/code"
-            app:layout_constraintBottom_toTopOf="@+id/text_view_code"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner" />
-
-        <TextView
-            android:id="@+id/text_view_code"
+        <ScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:text="@{viewModel.functionText}"
             app:layout_constraintBottom_toTopOf="@+id/button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_title"
-            tools:text="@tools:sample/lorem/random" />
+            app:layout_constraintTop_toBottomOf="@+id/spinner"
+            tools:text="@tools:sample/lorem/random">
+
+            <TextView
+                android:id="@+id/text_view_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.functionText}"
+                tools:text="@tools:sample/lorem/random" />
+        </ScrollView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button"
@@ -61,6 +55,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_code" />
+            app:layout_constraintTop_toBottomOf="@+id/scroll_view" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

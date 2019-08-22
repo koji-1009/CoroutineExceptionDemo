@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">CoroutineExceptionDemo</string>
     <string name="test_function">Test function</string>
-    <string name="code">Code (Check logcat for results)</string>
 </resources>
