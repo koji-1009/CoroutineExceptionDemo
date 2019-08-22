@@ -279,8 +279,7 @@ class MainViewModel : ViewModel() {
                                 Log.d(TAG, "stop thread 250ms end 2nd")
                             }
 
-                            deferred1.await()
-                            deferred2.await()
+                            deferred1.await() + deferred2.await()
                         }
                     }.fold(
                         onSuccess = {
@@ -312,8 +311,7 @@ class MainViewModel : ViewModel() {
                                 Log.d(TAG, "stop thread 250ms end 2nd")
                             }
 
-                            deferred1.await()
-                            deferred2.await()
+                            deferred1.await() + deferred2.await()
                         }
                     }.fold(
                         onSuccess = {
@@ -571,8 +569,7 @@ class MainViewModel : ViewModel() {
                                 Log.d(TAG, "stop thread 250ms end 2nd")
                             }
 
-                            deferred1.await()
-                            deferred2.await()
+                            deferred1.await() + deferred2.await()
                         }
                     }.fold(
                         onSuccess = {
@@ -604,8 +601,7 @@ class MainViewModel : ViewModel() {
                                 Log.d(TAG, "stop thread 250ms end 2nd")
                             }
 
-                            deferred1.await()
-                            deferred2.await()
+                            deferred1.await() + deferred2.await()
                         }
                     }.fold(
                         onSuccess = {
