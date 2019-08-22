@@ -1,0 +1,14 @@
+package com.dr1009.app.coroutineexceptiondemo.ui.main
+
+enum class FunctionType {
+    SINGLE,
+    DOUBLE,
+    LAUNCH,
+    COROUTINE_SCOPE,
+    COROUTINE_SCOPE_LAUNCH,
+    EXCEPTION,
+    EXCEPTION_COROUTINE_SCOPE,
+    EXCEPTION_SUPERVISOR_SCOPE,
+    EXCEPTION_COROUTINE_SCOPE_CATCH,
+    EXCEPTION_SUPERVISOR_SCOPE_CATCH,
+}
