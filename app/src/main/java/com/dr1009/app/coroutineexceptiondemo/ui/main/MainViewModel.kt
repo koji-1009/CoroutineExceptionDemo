@@ -26,10 +26,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.*
 
 class MainViewModel : ViewModel() {
 
@@ -112,6 +109,41 @@ class MainViewModel : ViewModel() {
                             Log.d(TAG, "stop thread 250ms end 2nd")
                         }
                     }
+
+                    Log.d(TAG, "function end")
+                }
+                FunctionType.COROUTINE_JOB -> {
+                    Log.d(TAG, "function start")
+
+                    val job = launch {
+                        Log.d(TAG, "stop thread 500ms start 1st")
+                        delay(500)
+                        Log.d(TAG, "stop thread 500ms end 1st")
+                    }
+
+                    launch(job) {
+                        Log.d(TAG, "stop thread 250ms start 2nd")
+                        delay(250)
+                        Log.d(TAG, "stop thread 250ms end 2nd")
+                    }
+
+                    Log.d(TAG, "function end")
+                }
+                FunctionType.COROUTINE_JOB_JOIN -> {
+                    Log.d(TAG, "function start")
+
+                    val job = launch {
+                        Log.d(TAG, "stop thread 500ms start 1st")
+                        delay(500)
+                        Log.d(TAG, "stop thread 500ms end 1st")
+                    }
+
+                    launch(job) {
+                        Log.d(TAG, "stop thread 250ms start 2nd")
+                        delay(250)
+                        Log.d(TAG, "stop thread 250ms end 2nd")
+                    }
+                    job.join()
 
                     Log.d(TAG, "function end")
                 }
@@ -304,6 +336,41 @@ class MainViewModel : ViewModel() {
                 }
             }
             
+            Log.d(TAG, "function end")
+        """.trimIndent()
+        FunctionType.COROUTINE_JOB -> """
+            Log.d(TAG, "function start")
+
+            val job = launch {
+                Log.d(TAG, "stop thread 500ms start 1st")
+                delay(500)
+                Log.d(TAG, "stop thread 500ms end 1st")
+            }
+
+            launch(job) {
+                Log.d(TAG, "stop thread 250ms start 2nd")
+                delay(250)
+                Log.d(TAG, "stop thread 250ms end 2nd")
+            }
+
+            Log.d(TAG, "function end")
+        """.trimIndent()
+        FunctionType.COROUTINE_JOB_JOIN -> """ 
+            Log.d(TAG, "function start")
+
+            val job = launch {
+                Log.d(TAG, "stop thread 500ms start 1st")
+                delay(500)
+                Log.d(TAG, "stop thread 500ms end 1st")
+            }
+
+            launch(job) {
+                Log.d(TAG, "stop thread 250ms start 2nd")
+                delay(250)
+                Log.d(TAG, "stop thread 250ms end 2nd")
+            }
+            job.join()
+
             Log.d(TAG, "function end")
         """.trimIndent()
         FunctionType.EXCEPTION -> """
