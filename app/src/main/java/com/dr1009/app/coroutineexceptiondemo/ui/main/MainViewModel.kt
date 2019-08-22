@@ -260,231 +260,363 @@ class MainViewModel : ViewModel() {
 
                     Log.d(TAG, "function end")
                 }
+                FunctionType.EXCEPTION_COROUTINE_SCOPE_ASYNC_CATCH -> {
+                    Log.d(TAG, "function start")
+
+                    runCatching {
+                        coroutineScope {
+                            val deferred1 = async {
+                                Log.d(TAG, "stop thread 500ms start 1st")
+                                delay(500)
+                                Log.d(TAG, "stop thread 500ms end 1st")
+                            }
+
+                            val deferred2 = async {
+                                Log.d(TAG, "stop thread 250ms start 2nd")
+                                delay(250)
+
+                                throw Exception("Throw Exception")
+                                Log.d(TAG, "stop thread 250ms end 2nd")
+                            }
+
+                            deferred1.await()
+                            deferred2.await()
+                        }
+                    }.fold(
+                        onSuccess = {
+                            Log.d(TAG, "success runCatching")
+                        },
+                        onFailure = {
+                            Log.d(TAG, "failed runCatching")
+                        }
+                    )
+
+                    Log.d(TAG, "function end")
+                }
+                FunctionType.EXCEPTION_SUPERVISOR_SCOPE_ASYNC_CATCH -> {
+                    Log.d(TAG, "function start")
+
+                    runCatching {
+                        supervisorScope {
+                            val deferred1 = async {
+                                Log.d(TAG, "stop thread 500ms start 1st")
+                                delay(500)
+                                Log.d(TAG, "stop thread 500ms end 1st")
+                            }
+
+                            val deferred2 = async {
+                                Log.d(TAG, "stop thread 250ms start 2nd")
+                                delay(250)
+
+                                throw Exception("Throw Exception")
+                                Log.d(TAG, "stop thread 250ms end 2nd")
+                            }
+
+                            deferred1.await()
+                            deferred2.await()
+                        }
+                    }.fold(
+                        onSuccess = {
+                            Log.d(TAG, "success runCatching")
+                        },
+                        onFailure = {
+                            Log.d(TAG, "failed runCatching")
+                        }
+                    )
+
+                    Log.d(TAG, "function end")
+                }
             }
         }
     }
 
     private fun FunctionType.getCodeText() = when (this) {
         FunctionType.SINGLE -> """
-            Log.d(TAG, "function start")
-            
-            Log.d(TAG, "stop thread 500ms start")
-            delay(500)
-            Log.d(TAG, "stop thread 500ms end")
-            
-            Log.d(TAG, "function end")
+                    Log.d(TAG, "function start")
+                    
+                    Log.d(TAG, "stop thread 500ms start")
+                    delay(500)
+                    Log.d(TAG, "stop thread 500ms end")
+                    
+                    Log.d(TAG, "function end")
         """.trimIndent()
         FunctionType.DOUBLE -> """
-            Log.d(TAG, "function start")
-            
-            Log.d(TAG, "stop thread 500ms start 1st")
-            delay(500)
-            Log.d(TAG, "stop thread 500ms end 1st")
-            
-            Log.d(TAG, "stop thread 250ms start 2nd")
-            delay(250)
-            Log.d(TAG, "stop thread 250ms end 2nd")
-            
-            Log.d(TAG, "function end")
+                    Log.d(TAG, "function start")
+                    
+                    Log.d(TAG, "stop thread 500ms start 1st")
+                    delay(500)
+                    Log.d(TAG, "stop thread 500ms end 1st")
+                    
+                    Log.d(TAG, "stop thread 250ms start 2nd")
+                    delay(250)
+                    Log.d(TAG, "stop thread 250ms end 2nd")
+                    
+                    Log.d(TAG, "function end")
         """.trimIndent()
         FunctionType.LAUNCH -> """
-            Log.d(TAG, "function start")
-            
-            launch {
-                Log.d(TAG, "stop thread 500ms start 1st")
-                delay(500)
-                Log.d(TAG, "stop thread 500ms end 1st")
-            }
-            
-            launch {
-                Log.d(TAG, "stop thread 250ms start 2nd")
-                delay(250)
-                Log.d(TAG, "stop thread 250ms end 2nd")
-            }
-            
-            Log.d(TAG, "function end")
+                    Log.d(TAG, "function start")
+                    
+                    launch {
+                        Log.d(TAG, "stop thread 500ms start 1st")
+                        delay(500)
+                        Log.d(TAG, "stop thread 500ms end 1st")
+                    }
+                    
+                    launch {
+                        Log.d(TAG, "stop thread 250ms start 2nd")
+                        delay(250)
+                        Log.d(TAG, "stop thread 250ms end 2nd")
+                    }
+                    
+                    Log.d(TAG, "function end")
         """.trimIndent()
         FunctionType.COROUTINE_SCOPE -> """
-            Log.d(TAG, "function start")
-            
-            coroutineScope {
-                Log.d(TAG, "stop thread 500ms start 1st")
-                delay(500)
-                Log.d(TAG, "stop thread 500ms end 1st")
-            
-                Log.d(TAG, "stop thread 250ms start 2nd")
-                delay(250)
-                Log.d(TAG, "stop thread 250ms end 2nd")
-            }
-            
-            Log.d(TAG, "function end")
+                    Log.d(TAG, "function start")
+                    
+                    coroutineScope {
+                        Log.d(TAG, "stop thread 500ms start 1st")
+                        delay(500)
+                        Log.d(TAG, "stop thread 500ms end 1st")
+                    
+                        Log.d(TAG, "stop thread 250ms start 2nd")
+                        delay(250)
+                        Log.d(TAG, "stop thread 250ms end 2nd")
+                    }
+                    
+                    Log.d(TAG, "function end")
         """.trimIndent()
         FunctionType.COROUTINE_SCOPE_LAUNCH -> """
-            Log.d(TAG, "function start")
-            
-            coroutineScope {
-                launch {
-                    Log.d(TAG, "stop thread 500ms start 1st")
-                    delay(500)
-                    Log.d(TAG, "stop thread 500ms end 1st")
-                }
-            
-                launch {
-                    Log.d(TAG, "stop thread 250ms start 2nd")
-                    delay(250)
-                    Log.d(TAG, "stop thread 250ms end 2nd")
-                }
-            }
-            
-            Log.d(TAG, "function end")
+                    Log.d(TAG, "function start")
+                    
+                    coroutineScope {
+                        launch {
+                            Log.d(TAG, "stop thread 500ms start 1st")
+                            delay(500)
+                            Log.d(TAG, "stop thread 500ms end 1st")
+                        }
+                    
+                        launch {
+                            Log.d(TAG, "stop thread 250ms start 2nd")
+                            delay(250)
+                            Log.d(TAG, "stop thread 250ms end 2nd")
+                        }
+                    }
+                    
+                    Log.d(TAG, "function end")
         """.trimIndent()
         FunctionType.COROUTINE_JOB -> """
-            Log.d(TAG, "function start")
-
-            val job = launch {
-                Log.d(TAG, "stop thread 500ms start 1st")
-                delay(500)
-                Log.d(TAG, "stop thread 500ms end 1st")
-            }
-
-            launch(job) {
-                Log.d(TAG, "stop thread 250ms start 2nd")
-                delay(250)
-                Log.d(TAG, "stop thread 250ms end 2nd")
-            }
-
-            Log.d(TAG, "function end")
+                    Log.d(TAG, "function start")
+        
+                    val job = launch {
+                        Log.d(TAG, "stop thread 500ms start 1st")
+                        delay(500)
+                        Log.d(TAG, "stop thread 500ms end 1st")
+                    }
+        
+                    launch(job) {
+                        Log.d(TAG, "stop thread 250ms start 2nd")
+                        delay(250)
+                        Log.d(TAG, "stop thread 250ms end 2nd")
+                    }
+        
+                    Log.d(TAG, "function end")
         """.trimIndent()
         FunctionType.COROUTINE_JOB_JOIN -> """ 
-            Log.d(TAG, "function start")
-
-            val job = launch {
-                Log.d(TAG, "stop thread 500ms start 1st")
-                delay(500)
-                Log.d(TAG, "stop thread 500ms end 1st")
-            }
-
-            launch(job) {
-                Log.d(TAG, "stop thread 250ms start 2nd")
-                delay(250)
-                Log.d(TAG, "stop thread 250ms end 2nd")
-            }
-            job.join()
-
-            Log.d(TAG, "function end")
+                    Log.d(TAG, "function start")
+        
+                    val job = launch {
+                        Log.d(TAG, "stop thread 500ms start 1st")
+                        delay(500)
+                        Log.d(TAG, "stop thread 500ms end 1st")
+                    }
+        
+                    launch(job) {
+                        Log.d(TAG, "stop thread 250ms start 2nd")
+                        delay(250)
+                        Log.d(TAG, "stop thread 250ms end 2nd")
+                    }
+                    job.join()
+        
+                    Log.d(TAG, "function end")
         """.trimIndent()
         FunctionType.EXCEPTION -> """
-            Log.d(TAG, "function start")
-            
-            Log.d(TAG, "stop thread 500ms start")
-            delay(500)
-            Log.d(TAG, "stop thread 500ms end")
-            
-            throw Exception()
-            
-            Log.d(TAG, "function end")
+                    Log.d(TAG, "function start")
+                    
+                    Log.d(TAG, "stop thread 500ms start")
+                    delay(500)
+                    Log.d(TAG, "stop thread 500ms end")
+                    
+                    throw Exception()
+                    
+                    Log.d(TAG, "function end")
         """.trimIndent()
         FunctionType.EXCEPTION_COROUTINE_SCOPE -> """
-            Log.d(TAG, "function start")
-
-            coroutineScope {
-                launch {
-                    Log.d(TAG, "stop thread 500ms start 1st")
-                    delay(500)
-                    Log.d(TAG, "stop thread 500ms end 1st")
-                }
-
-                launch {
-                    Log.d(TAG, "stop thread 250ms start 2nd")
-                    delay(250)
-
-                    throw Exception("Throw Exception")
-                    Log.d(TAG, "stop thread 250ms end 2nd")
-                }
-            }
-
-            Log.d(TAG, "function end")
+                    Log.d(TAG, "function start")
+        
+                    coroutineScope {
+                        launch {
+                            Log.d(TAG, "stop thread 500ms start 1st")
+                            delay(500)
+                            Log.d(TAG, "stop thread 500ms end 1st")
+                        }
+        
+                        launch {
+                            Log.d(TAG, "stop thread 250ms start 2nd")
+                            delay(250)
+        
+                            throw Exception("Throw Exception")
+                            Log.d(TAG, "stop thread 250ms end 2nd")
+                        }
+                    }
+        
+                    Log.d(TAG, "function end")
         """.trimIndent()
         FunctionType.EXCEPTION_SUPERVISOR_SCOPE -> """
-            Log.d(TAG, "function start")
-
-            supervisorScope {
-                launch {
-                    Log.d(TAG, "stop thread 500ms start 1st")
-                    delay(500)
-                    Log.d(TAG, "stop thread 500ms end 1st")
-                }
-
-                launch {
-                    Log.d(TAG, "stop thread 250ms start 2nd")
-                    delay(250)
-
-                    throw Exception("Throw Exception")
-                    Log.d(TAG, "stop thread 250ms end 2nd")
-                }
-            }
-
-            Log.d(TAG, "function end")
+                    Log.d(TAG, "function start")
+        
+                    supervisorScope {
+                        launch {
+                            Log.d(TAG, "stop thread 500ms start 1st")
+                            delay(500)
+                            Log.d(TAG, "stop thread 500ms end 1st")
+                        }
+        
+                        launch {
+                            Log.d(TAG, "stop thread 250ms start 2nd")
+                            delay(250)
+        
+                            throw Exception("Throw Exception")
+                            Log.d(TAG, "stop thread 250ms end 2nd")
+                        }
+                    }
+        
+                    Log.d(TAG, "function end")
         """.trimIndent()
         FunctionType.EXCEPTION_COROUTINE_SCOPE_CATCH -> """
-            Log.d(TAG, "function start")
-
-            runCatching {
-                coroutineScope {
-                    launch {
-                        Log.d(TAG, "stop thread 500ms start 1st")
-                        delay(500)
-                        Log.d(TAG, "stop thread 500ms end 1st")
-                    }
-
-                    launch {
-                        Log.d(TAG, "stop thread 250ms start 2nd")
-                        delay(250)
-
-                        throw Exception("Throw Exception")
-                        Log.d(TAG, "stop thread 250ms end 2nd")
-                    }
-                }
-            }.fold(
-                onSuccess = {
-                    Log.d(TAG, "success runCatching")
-                },
-                onFailure = {
-                    Log.d(TAG, "failed runCatching")
-                }
-            )
-
-            Log.d(TAG, "function end")
+                    Log.d(TAG, "function start")
+        
+                    runCatching {
+                        coroutineScope {
+                            launch {
+                                Log.d(TAG, "stop thread 500ms start 1st")
+                                delay(500)
+                                Log.d(TAG, "stop thread 500ms end 1st")
+                            }
+        
+                            launch {
+                                Log.d(TAG, "stop thread 250ms start 2nd")
+                                delay(250)
+        
+                                throw Exception("Throw Exception")
+                                Log.d(TAG, "stop thread 250ms end 2nd")
+                            }
+                        }
+                    }.fold(
+                        onSuccess = {
+                            Log.d(TAG, "success runCatching")
+                        },
+                        onFailure = {
+                            Log.d(TAG, "failed runCatching")
+                        }
+                    )
+        
+                    Log.d(TAG, "function end")
         """.trimIndent()
         FunctionType.EXCEPTION_SUPERVISOR_SCOPE_CATCH -> """
-            Log.d(TAG, "function start")
+                    Log.d(TAG, "function start")
+        
+                    runCatching {
+                        supervisorScope {
+                            launch {
+                                Log.d(TAG, "stop thread 500ms start 1st")
+                                delay(500)
+                                Log.d(TAG, "stop thread 500ms end 1st")
+                            }
+        
+                            launch {
+                                Log.d(TAG, "stop thread 250ms start 2nd")
+                                delay(250)
+        
+                                throw Exception("Throw Exception")
+                                Log.d(TAG, "stop thread 250ms end 2nd")
+                            }
+                        }
+                    }.fold(
+                        onSuccess = {
+                            Log.d(TAG, "success runCatching")
+                        },
+                        onFailure = {
+                            Log.d(TAG, "failed runCatching")
+                        }
+                    )
+        
+                    Log.d(TAG, "function end")
+        """.trimIndent()
+        FunctionType.EXCEPTION_COROUTINE_SCOPE_ASYNC_CATCH -> """
+                    Log.d(TAG, "function start")
 
-            runCatching {
-                supervisorScope {
-                    launch {
-                        Log.d(TAG, "stop thread 500ms start 1st")
-                        delay(500)
-                        Log.d(TAG, "stop thread 500ms end 1st")
-                    }
+                    runCatching {
+                        coroutineScope {
+                            val deferred1 = async {
+                                Log.d(TAG, "stop thread 500ms start 1st")
+                                delay(500)
+                                Log.d(TAG, "stop thread 500ms end 1st")
+                            }
 
-                    launch {
-                        Log.d(TAG, "stop thread 250ms start 2nd")
-                        delay(250)
+                            val deferred2 = async {
+                                Log.d(TAG, "stop thread 250ms start 2nd")
+                                delay(250)
 
-                        throw Exception("Throw Exception")
-                        Log.d(TAG, "stop thread 250ms end 2nd")
-                    }
-                }
-            }.fold(
-                onSuccess = {
-                    Log.d(TAG, "success runCatching")
-                },
-                onFailure = {
-                    Log.d(TAG, "failed runCatching")
-                }
-            )
+                                throw Exception("Throw Exception")
+                                Log.d(TAG, "stop thread 250ms end 2nd")
+                            }
 
-            Log.d(TAG, "function end")
+                            deferred1.await()
+                            deferred2.await()
+                        }
+                    }.fold(
+                        onSuccess = {
+                            Log.d(TAG, "success runCatching")
+                        },
+                        onFailure = {
+                            Log.d(TAG, "failed runCatching")
+                        }
+                    )
+
+                    Log.d(TAG, "function end")
+        """.trimIndent()
+        FunctionType.EXCEPTION_SUPERVISOR_SCOPE_ASYNC_CATCH -> """
+                    Log.d(TAG, "function start")
+
+                    runCatching {
+                        supervisorScope {
+                            val deferred1 = async {
+                                Log.d(TAG, "stop thread 500ms start 1st")
+                                delay(500)
+                                Log.d(TAG, "stop thread 500ms end 1st")
+                            }
+
+                            val deferred2 = async {
+                                Log.d(TAG, "stop thread 250ms start 2nd")
+                                delay(250)
+
+                                throw Exception("Throw Exception")
+                                Log.d(TAG, "stop thread 250ms end 2nd")
+                            }
+
+                            deferred1.await()
+                            deferred2.await()
+                        }
+                    }.fold(
+                        onSuccess = {
+                            Log.d(TAG, "success runCatching")
+                        },
+                        onFailure = {
+                            Log.d(TAG, "failed runCatching")
+                        }
+                    )
+
+                    Log.d(TAG, "function end")
         """.trimIndent()
     }
 
