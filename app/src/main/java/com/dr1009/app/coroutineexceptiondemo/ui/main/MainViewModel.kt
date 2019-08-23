@@ -78,6 +78,30 @@ class MainViewModel : ViewModel() {
 
                     Log.d(TAG, "function end")
                 }
+                FunctionType.ASYNC -> {
+                    Log.d(TAG, "function start")
+
+                    val deferred1 = async {
+                        Log.d(TAG, "stop thread 500ms start 1st")
+                        delay(500)
+                        Log.d(TAG, "stop thread 500ms end 1st")
+
+                        return@async 1
+                    }
+
+                    val deferred2 = async {
+                        Log.d(TAG, "stop thread 250ms start 2nd")
+                        delay(250)
+                        Log.d(TAG, "stop thread 250ms end 2nd")
+
+                        return@async 2
+                    }
+
+                    val result = deferred1.await() + deferred2.await()
+                    Log.d(TAG, "result is " + result)
+
+                    Log.d(TAG, "function end")
+                }
                 FunctionType.COROUTINE_SCOPE -> {
                     Log.d(TAG, "function start")
 
@@ -269,6 +293,8 @@ class MainViewModel : ViewModel() {
                                 Log.d(TAG, "stop thread 500ms start 1st")
                                 delay(500)
                                 Log.d(TAG, "stop thread 500ms end 1st")
+
+                                return@async 1
                             }
 
                             val deferred2 = async {
@@ -277,12 +303,15 @@ class MainViewModel : ViewModel() {
 
                                 throw Exception("Throw Exception")
                                 Log.d(TAG, "stop thread 250ms end 2nd")
+
+                                return@async 2
                             }
 
                             deferred1.await() + deferred2.await()
                         }
                     }.fold(
                         onSuccess = {
+                            Log.d(TAG, "result is " + it)
                             Log.d(TAG, "success runCatching")
                         },
                         onFailure = {
@@ -301,6 +330,8 @@ class MainViewModel : ViewModel() {
                                 Log.d(TAG, "stop thread 500ms start 1st")
                                 delay(500)
                                 Log.d(TAG, "stop thread 500ms end 1st")
+
+                                return@async 1
                             }
 
                             val deferred2 = async {
@@ -309,12 +340,15 @@ class MainViewModel : ViewModel() {
 
                                 throw Exception("Throw Exception")
                                 Log.d(TAG, "stop thread 250ms end 2nd")
+
+                                return@async 2
                             }
 
                             deferred1.await() + deferred2.await()
                         }
                     }.fold(
                         onSuccess = {
+                            Log.d(TAG, "result is " + it)
                             Log.d(TAG, "success runCatching")
                         },
                         onFailure = {
@@ -366,6 +400,30 @@ class MainViewModel : ViewModel() {
                         Log.d(TAG, "stop thread 250ms end 2nd")
                     }
                     
+                    Log.d(TAG, "function end")
+        """.trimIndent()
+        FunctionType.ASYNC -> """
+                    Log.d(TAG, "function start")
+
+                    val deferred1 = async {
+                        Log.d(TAG, "stop thread 500ms start 1st")
+                        delay(500)
+                        Log.d(TAG, "stop thread 500ms end 1st")
+                        
+                        return@async 1
+                    }
+
+                    val deferred2 = async {
+                        Log.d(TAG, "stop thread 250ms start 2nd")
+                        delay(250)
+                        Log.d(TAG, "stop thread 250ms end 2nd")
+                        
+                        return@async 2
+                    }
+
+                    val result = deferred1.await() + deferred2.await()
+                    Log.d(TAG, "result is " + result)
+
                     Log.d(TAG, "function end")
         """.trimIndent()
         FunctionType.COROUTINE_SCOPE -> """
@@ -559,6 +617,8 @@ class MainViewModel : ViewModel() {
                                 Log.d(TAG, "stop thread 500ms start 1st")
                                 delay(500)
                                 Log.d(TAG, "stop thread 500ms end 1st")
+                                
+                                return@async 1
                             }
 
                             val deferred2 = async {
@@ -567,12 +627,15 @@ class MainViewModel : ViewModel() {
 
                                 throw Exception("Throw Exception")
                                 Log.d(TAG, "stop thread 250ms end 2nd")
+                                
+                                return@async 2
                             }
 
                             deferred1.await() + deferred2.await()
                         }
                     }.fold(
                         onSuccess = {
+                            Log.d(TAG, "result is " + it)
                             Log.d(TAG, "success runCatching")
                         },
                         onFailure = {
@@ -591,6 +654,8 @@ class MainViewModel : ViewModel() {
                                 Log.d(TAG, "stop thread 500ms start 1st")
                                 delay(500)
                                 Log.d(TAG, "stop thread 500ms end 1st")
+                                
+                                return@async 1
                             }
 
                             val deferred2 = async {
@@ -599,12 +664,15 @@ class MainViewModel : ViewModel() {
 
                                 throw Exception("Throw Exception")
                                 Log.d(TAG, "stop thread 250ms end 2nd")
+                                
+                                return@async 2
                             }
 
                             deferred1.await() + deferred2.await()
                         }
                     }.fold(
                         onSuccess = {
+                            Log.d(TAG, "result is " + it)
                             Log.d(TAG, "success runCatching")
                         },
                         onFailure = {

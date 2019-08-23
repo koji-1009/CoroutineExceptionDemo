@@ -25,6 +25,7 @@ enum class FunctionType {
     SINGLE,
     DOUBLE,
     LAUNCH,
+    ASYNC,
     COROUTINE_SCOPE,
     COROUTINE_SCOPE_LAUNCH,
     COROUTINE_JOB,
